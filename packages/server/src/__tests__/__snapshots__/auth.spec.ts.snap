@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AUTH API ENDPOINTS POST LOGIN /api/v1/auth/login Should not login user without passing data 1`] = `
+{
+  "errors": [
+    {
+      "field": "email",
+      "message": ""email" is required",
+    },
+  ],
+  "message": "Validation failed.",
+}
+`;
+
+exports[`AUTH API ENDPOINTS POST REGISTER /api/v1/auth/register Register without passing data should fail 1`] = `
+{
+  "errors": [
+    {
+      "field": "name",
+      "message": ""name" is required",
+    },
+  ],
+  "message": "Validation failed.",
+}
+`;

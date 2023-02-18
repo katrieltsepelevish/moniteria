@@ -1,0 +1,28 @@
+{
+  "name": "moniteria",
+  "version": "0.0.0",
+  "description": "A self-hosted websites monitoring tool",
+  "main": "index.js",
+  "author": "Katriel Tsepelevish <katriel.tsepelevish@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "prebuild": "lerna bootstrap --hoist",
+    "watch": "lerna run watch",
+    "build": "lerna run build --stream",
+    "test": "lerna run test",
+    "changelog": "lerna run changelog",
+    "release": "lerna run release",
+    "postinstall": "lerna bootstrap",
+    "start": "yarn lerna run start --stream --parallel",
+    "dev": "yarn lerna run dev  --stream --parallel",
+    "pretify:all": "npx prettier --write ."
+  },
+  "devDependencies": {
+    "lerna": "^6.5.1",
+    "prettier": "^2.8.4"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
