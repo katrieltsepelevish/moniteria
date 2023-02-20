@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import TextDivider from '../../../components/TextDivider';
 import ManualLoginForm from '../components/ManualLoginForm';
@@ -27,6 +27,9 @@ const Login = () => {
           <SocialProviders /> */}
         </div>
       </div>
+      <Link to="/register" className="mt-4">
+        <small className="underline text-[#9e9e9e]">Move to registration</small>
+      </Link>
     </div>
   );
 };
