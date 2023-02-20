@@ -39,7 +39,17 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       password: hashedPassword,
     });
 
-    res.status(201).send({ user: newUser, token: newUser!.generateToken() });
+    // Convert to object from document and remove password field
+    const userWithoutPassword = newUser.toObject();
+    delete userWithoutPassword!.password;
+
+    return res
+      .cookie('auth_token', newUser!.generateToken(), {
+        httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
+      })
+      .status(201)
+      .send({ user: userWithoutPassword });
   } catch (err) {
     next(err);
   }

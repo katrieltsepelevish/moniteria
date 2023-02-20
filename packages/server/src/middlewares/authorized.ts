@@ -3,8 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import User from '../models/user';
 
 const authorized = async (req: Request, res: Response, next: NextFunction) => {
-  // Extract token from authorization header
-  const [, token] = (req.headers.authorization || '').split(' ');
+  // Extract token from cookie
+  const token = req.cookies?.auth_token;
 
   const user = await User.verifyToken(token);
 
@@ -12,7 +12,7 @@ const authorized = async (req: Request, res: Response, next: NextFunction) => {
     return next();
   }
 
-  res.status(401).send({
+  return res.status(401).send({
     message: 'Unauthorized',
   });
 };

@@ -37,9 +37,7 @@ UserSchema.statics.verifyToken = async function (token: string) {
       _id: string;
     };
 
-    const user = await this.findOne({
-      _id: payload._id,
-    });
+    const user = await this.findById(payload._id);
 
     if (!user) {
       throw new Error('User is missing for token verification');
@@ -59,7 +57,7 @@ export interface UserDocument extends Mongoose.Document {
   generateToken: () => string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   createdAt: Date;
   updatedAt: Date;
 }

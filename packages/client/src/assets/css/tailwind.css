@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Disket-Mono';
+    src: url('/fonts/Disket-Mono-Regular.ttf');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Disket-Mono';
+    src: url('/fonts/Disket-Mono-Bold.ttf');
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+  }
+
+  html {
+    background-color: #fafafa;
+    font-family: 'Manrope';
+    font-size: 16px;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply h-[50px] px-[26px] py-0 rounded-[4px] text-[#25262B] bg-[#E9ECEF] hover:bg-[#CED4DAA6];
+  }
+}

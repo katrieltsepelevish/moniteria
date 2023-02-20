@@ -21,7 +21,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       email: req.body.email,
     });
 
-    if (!user || !Bcrypt.compareSync(req.body.password, user!.password)) {
+    if (!user || !Bcrypt.compareSync(req.body.password, user!.password!)) {
       throw new ValidationException([
         {
           message: 'These credentials do not match our records.',
@@ -30,7 +30,17 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       ]);
     }
 
-    res.status(200).send({ user, token: user!.generateToken() });
+    // Convert to object from document and remove password field
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword!.password;
+
+    return res
+      .cookie('auth_token', user!.generateToken(), {
+        httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
+      })
+      .status(200)
+      .send({ user: userWithoutPassword });
   } catch (err) {
     next(err);
   }
