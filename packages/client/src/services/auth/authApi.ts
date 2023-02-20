@@ -31,13 +31,17 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(setUser(data!.user));
+
+          const refetchMe = authApi.endpoints.getMe.initiate(null, {
+            forceRefetch: true,
+          });
+          await dispatch(refetchMe);
         } catch (err) {
           console.error(err);
         } finally {
           dispatch(setLoading(false));
         }
       },
-      invalidatesTags: ['Me'],
     }),
     registerUser: builder.mutation({
       query: (data: RegisterRequest) => ({
@@ -51,13 +55,17 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(setUser(data!.user));
+
+          const refetchMe = authApi.endpoints.getMe.initiate(null, {
+            forceRefetch: true,
+          });
+          await dispatch(refetchMe);
         } catch (err) {
           console.error(err);
         } finally {
           dispatch(setLoading(false));
         }
       },
-      invalidatesTags: ['Me'],
     }),
     getMe: builder.query({
       query: () => ({
