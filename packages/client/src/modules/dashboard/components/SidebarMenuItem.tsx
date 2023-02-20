@@ -17,7 +17,7 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
   const classes = React.useMemo(
     () =>
       ClassNames(
-        'flex p-3 w-full items-center justify-center relative hover:bg-[#f2f2f2] transition-all duration-500',
+        'flex p-3 w-full items-center justify-center relative hover:bg-[#f2f2f2] hover:text-black transition-all duration-500',
         {
           'bg-black border-black text-white': active,
         },
