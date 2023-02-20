@@ -19,7 +19,7 @@ const Register = () => {
           <h1 className="text-[28px] font-disket font-semibold">Welcome!</h1>
           <span className="opacity-[0.5]">Register a new account</span>
         </div>
-        <div className="bg-[white] rounded-[4px] border mt-6 p-4">
+        <div className="mt-6">
           <ManualRegistrationForm onSubmit={handleSubmit} />
           {/* <TextDivider text="OR" />
           <SocialProviders /> */}

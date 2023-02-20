@@ -21,7 +21,7 @@ const Login = () => {
           </h1>
           <span className="opacity-[0.5]">Log into your account</span>
         </div>
-        <div className="bg-[white] rounded-[4px] border mt-6 p-4">
+        <div className="mt-6">
           <ManualLoginForm onSubmit={handleSubmit} />
           {/* <TextDivider text="OR" />
           <SocialProviders /> */}

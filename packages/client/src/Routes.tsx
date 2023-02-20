@@ -12,6 +12,7 @@ import Login from './shared/authentication/pages/Login';
 import Loader from './components/Loader';
 import { useGetMeQuery } from './services/auth/authApi';
 import Register from './shared/authentication/pages/Register';
+import Dashboard from './modules/dashboard/pages/Dashboard';
 
 const UNAUTHORIZED_CODE = 401;
 
@@ -53,7 +54,7 @@ const Routes = () => {
         )}
         {setupCompleted && authorized && (
           <>
-            <Route path="/" element={<>Dashboard</>} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="*" element={<>Not Found</>} />
           </>
         )}
