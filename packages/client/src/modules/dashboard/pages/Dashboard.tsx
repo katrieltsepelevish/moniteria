@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { RiAddFill } from 'react-icons/ri';
-import IconButton from '../../../components/IconButton';
-
-import FormSidebar from '../components/FormSidebar/FormSidebar';
+import FormSidebar from '../components/FormSidebar';
 import Monitors from '../components/Monitors/Monitors';
 import SidebarMenu from '../components/SidebarMenu';
 

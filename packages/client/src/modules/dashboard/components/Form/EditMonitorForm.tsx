@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { RiCloseLine, RiSaveLine } from 'react-icons/ri';
-import Field from '../../../../../components/Field';
+import Field from '../../../../components/Field';
 
-import IconButton from '../../../../../components/IconButton';
-import SelectField from '../../../../../components/SelectField';
+import IconButton from '../../../../components/IconButton';
+import SelectField from '../../../../components/SelectField';
 
 const EditMonitorForm = () => (
   <div className="flex flex-col gap-2 mt-4">

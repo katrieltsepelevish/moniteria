@@ -1,7 +1,7 @@
 import React from 'react';
 
-import AddMonitorItem from './AddMonitorItem';
-import AddMonitorButton from './AddMonitorButton';
+import AddMonitorItem from './AddMonitor/AddMonitorItem';
+import AddMonitorButton from './AddMonitor/AddMonitorButton';
 import MonitorItem from './MonitorItem/MonitorItem';
 import {
   MonitorState,
@@ -19,6 +19,7 @@ const Monitors: React.FC<MonitorsProps> = ({ toggleForm }) => {
 
   return (
     <div>
+      {/* Monitors grid */}
       <div className="grid grid-cols-4">
         {monitors && monitors.length > 0 ? (
           <>

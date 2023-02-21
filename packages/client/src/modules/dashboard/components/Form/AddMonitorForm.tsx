@@ -2,13 +2,13 @@ import React from 'react';
 
 import { RiCloseLine, RiSendPlaneLine } from 'react-icons/ri';
 
-import Field from '../../../../../components/Field';
-import IconButton from '../../../../../components/IconButton';
-import SelectField from '../../../../../components/SelectField';
+import Field from '../../../../components/Field';
+import IconButton from '../../../../components/IconButton';
+import SelectField from '../../../../components/SelectField';
 import {
   AddMonitorRequest,
   useAddMonitorMutation,
-} from '../../../../../services/monitor/monitorApi';
+} from '../../../../services/monitor/monitorApi';
 
 const initalFormValues: AddMonitorRequest = {
   name: '',
