@@ -1,14 +1,14 @@
 import React from 'react';
 import ClassNames from 'classnames';
 
-interface SidebarMenuItemProps
+interface MenuNavigationItemProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
   active?: boolean;
   className?: string;
 }
 
-const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
+const MenuNavigationItem: React.FC<MenuNavigationItemProps> = ({
   icon,
   active = false,
   className,
@@ -33,4 +33,4 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
   );
 };
 
-export default React.memo(SidebarMenuItem);
+export default React.memo(MenuNavigationItem);

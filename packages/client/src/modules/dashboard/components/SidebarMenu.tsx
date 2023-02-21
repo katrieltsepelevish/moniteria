@@ -1,31 +1,21 @@
 import React from 'react';
 
-import { RiHome5Line, RiSettings3Line, RiLogoutBoxLine } from 'react-icons/ri';
-import { useLogoutUserMutation } from '../../../services/auth/authApi';
+import { RiPulseFill } from 'react-icons/ri';
 
-import SidebarMenuItem from './SidebarMenuItem';
+import MenuNavigation from './MenuNavigation/MenuNavigation';
 
-const SidebarMenu = () => {
-  const [userLogout] = useLogoutUserMutation();
-
-  return (
-    <div className="flex flex-col items-center justify-between h-full w-full">
-      <div className="flex flex-col items-center justify-between w-full">
-        <SidebarMenuItem
-          active
-          icon={<RiHome5Line className="text-[24px]" />}
-        />
-      </div>
-      <div className="flex flex-col items-center justify-between w-full">
-        {/* Logout user  */}
-        <SidebarMenuItem
-          icon={<RiLogoutBoxLine className="text-[24px]" />}
-          onClick={userLogout}
-        />
-        <SidebarMenuItem icon={<RiSettings3Line className="text-[24px]" />} />
-      </div>
+const SidebarMenu = () => (
+  <div className="flex flex-col max-w-[60px] w-full h-full items-center border-r justify-between">
+    {/* Logo */}
+    <div className="border-b p-3 w-full items-center justify-center flex bg-[#f2f2f2]">
+      <button>
+        <div className="text-[#212529] rounded-[4px]">
+          <RiPulseFill className="text-[31.5px]" />
+        </div>
+      </button>
     </div>
-  );
-};
+    <MenuNavigation />
+  </div>
+);
 
 export default React.memo(SidebarMenu);
