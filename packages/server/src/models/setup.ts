@@ -17,6 +17,6 @@ export interface SetupDocument extends Mongoose.Document {
 }
 
 export default Mongoose.model<SetupDocument, Mongoose.Model<SetupDocument>>(
-  'setup',
+  'Setup',
   SetupSchema
 );

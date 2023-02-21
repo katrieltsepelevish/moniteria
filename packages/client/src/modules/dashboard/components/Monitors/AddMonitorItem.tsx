@@ -4,7 +4,7 @@ import { RiAddLine } from 'react-icons/ri';
 
 const AddMonitorItem = ({ ...props }) => (
   <div
-    className="flex flex-row items-center justify-center m-2 bg-[#f2f2f2] rounded-[4px] cursor-pointer hover:bg-[#d8d8d8] transition-all duration-500"
+    className="flex flex-row items-center justify-center h-[145px] m-2 bg-[#f2f2f2] rounded-[4px] cursor-pointer hover:bg-[#d8d8d8] transition-all duration-500"
     {...props}
   >
     <div className="flex flex-row items-center gap-2">

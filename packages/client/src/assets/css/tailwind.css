@@ -29,4 +29,8 @@
   .btn {
     @apply h-[50px] px-[26px] py-0 rounded-[4px] text-[#25262B] bg-[#E9ECEF] hover:bg-[#CED4DAA6];
   }
+
+  .icon-btn {
+    @apply p-1 rounded-[4px] hover:bg-[#f2f2f2] hover:text-black transition-all duration-500;
+  }
 }

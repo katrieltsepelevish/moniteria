@@ -8,22 +8,43 @@ import {
   RiLink,
 } from 'react-icons/ri';
 
-const MonitorItemActions = () => {
+import {
+  MonitorState,
+  useUpdateMonitorMutation,
+} from '../../../../../services/monitor/monitorApi';
+
+interface MonitorItemActionsProps {
+  monitor: MonitorState;
+}
+
+const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
+  const [updateMonitor] = useUpdateMonitorMutation();
+
+  const handleMonitorActivation = async () => {
+    await updateMonitor({
+      _id: monitor._id,
+      active: !monitor.active,
+    });
+  };
+
   return (
     <div className="flex flex-row gap-0 bg-[white] rounded-[4px] items-center justify-between p-1">
-      <button className="p-1 rounded-[4px] hover:bg-[#f2f2f2] hover:text-black transition-all duration-500">
+      <a target="_blank" href={monitor?.uri} className="icon-btn">
         <RiLink className="text-[21px]" />
-      </button>
-      <button className="p-1 rounded-[4px] hover:bg-[#f2f2f2] hover:text-black transition-all duration-500">
+      </a>
+      <button className="icon-btn">
         <RiCloseLine className="text-[19px]" />
       </button>
-      {/* <button className="p-1 rounded-[4px] hover:bg-[#f2f2f2] hover:text-black transition-all duration-500">
-        <RiPlayLine className="text-[19px]" />
-      </button> */}
-      <button className="p-1 rounded-[4px] hover:bg-[#f2f2f2] hover:text-black transition-all duration-500">
-        <RiPauseLine className="text-[19px]" />
-      </button>
-      <button className="p-1 rounded-[4px] hover:bg-[#f2f2f2] hover:text-black transition-all duration-500">
+      {monitor?.active ? (
+        <button className="icon-btn" onClick={handleMonitorActivation}>
+          <RiPauseLine className="text-[19px]" />
+        </button>
+      ) : (
+        <button className="icon-btn" onClick={handleMonitorActivation}>
+          <RiPlayLine className="text-[19px]" />
+        </button>
+      )}
+      <button className="icon-btn">
         <RiSettings3Line className="text-[19px]" />
       </button>
     </div>

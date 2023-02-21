@@ -56,6 +56,7 @@ const ManualLoginForm: React.FC<ManualLoginFormProp> = ({ onSubmit }) => {
         placeholder="example@moniteria.com"
         error={errors?.email}
         onChange={handleInputChange}
+        value={formValues?.email}
       />
       <Input
         label="password"
@@ -63,6 +64,7 @@ const ManualLoginForm: React.FC<ManualLoginFormProp> = ({ onSubmit }) => {
         placeholder="•••••••"
         error={errors?.password}
         onChange={handleInputChange}
+        value={formValues?.password}
       />
       <Button darkMode text="Sign in with email" onClick={handleSubmit} />
     </div>

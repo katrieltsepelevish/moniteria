@@ -59,6 +59,7 @@ const ManualRegistrationForm: React.FC<ManualRegistrationFormProp> = ({
         type="text"
         error={errors?.name}
         onChange={handleInputChange}
+        value={formValues?.name}
       />
       <Input
         label="email"
@@ -66,6 +67,7 @@ const ManualRegistrationForm: React.FC<ManualRegistrationFormProp> = ({
         placeholder="example@moniteria.com"
         error={errors?.email}
         onChange={handleInputChange}
+        value={formValues?.email}
       />
       <Input
         label="password"
@@ -73,6 +75,7 @@ const ManualRegistrationForm: React.FC<ManualRegistrationFormProp> = ({
         placeholder="•••••••"
         error={errors?.password}
         onChange={handleInputChange}
+        value={formValues?.password}
       />
       <Button darkMode text="Sign up with email" onClick={handleSubmit} />
     </div>
