@@ -17,10 +17,26 @@ import Dashboard from './modules/dashboard/pages/Dashboard';
 const UNAUTHORIZED_CODE = 401;
 
 const Routes = () => {
-  const { data: setupConfig, isFetching: isFetchingSetup } =
-    useCheckSetupQuery(null);
+  const {
+    data: setupConfig,
+    error: checkSetupError,
+    isFetching: isFetchingSetup,
+    refetch: refetchCheckSetup,
+  } = useCheckSetupQuery(null);
   const { error: userError, isFetching: isFetchingMe } =
     useGetMeQuery<any>(null);
+
+  const refetchTimer = React.useRef<any>();
+
+  React.useEffect(() => {
+    if (Boolean(checkSetupError)) {
+      refetchTimer.current = setTimeout(() => {
+        refetchCheckSetup();
+      }, 5 * 1000); // 5 seconds
+    }
+
+    return () => clearTimeout(refetchTimer.current);
+  }, [checkSetupError]);
 
   const authorized = React.useMemo(
     () => userError?.status !== UNAUTHORIZED_CODE,
@@ -32,7 +48,7 @@ const Routes = () => {
     [setupConfig]
   );
 
-  if (isFetchingMe || isFetchingSetup) {
+  if (isFetchingMe || isFetchingSetup || Boolean(checkSetupError)) {
     return <Loader />;
   }
 
