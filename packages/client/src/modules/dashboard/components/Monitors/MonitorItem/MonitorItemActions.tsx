@@ -8,6 +8,7 @@ import {
   RiLink,
 } from 'react-icons/ri';
 
+import { useFormSidebarContext } from '../../../../../contexts/FormSidebarContext';
 import {
   MonitorState,
   useDeleteMonitorMutation,
@@ -22,6 +23,9 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
   const [updateMonitor] = useUpdateMonitorMutation();
   const [deleteMonitor] = useDeleteMonitorMutation();
 
+  const { selectedMonitor, setEditMode, setSelectedMonitor, setOpen } =
+    useFormSidebarContext();
+
   const handleMonitorActivation = async () => {
     await updateMonitor({
       _id: monitor._id,
@@ -29,8 +33,19 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
     });
   };
 
+  const handleMonitorEdit = (id: string) => {
+    setEditMode(true);
+    setSelectedMonitor(id);
+    setOpen(true);
+  };
+
   const handleMonitorDelete = async (id: string) => {
     await deleteMonitor(id);
+
+    if (selectedMonitor === id) {
+      setEditMode(false);
+      setSelectedMonitor('');
+    }
   };
 
   return (
@@ -53,7 +68,10 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
           <RiPlayLine className="text-[19px]" />
         </button>
       )}
-      <button className="icon-btn">
+      <button
+        className="icon-btn"
+        onClick={() => handleMonitorEdit(monitor._id)}
+      >
         <RiSettings3Line className="text-[19px]" />
       </button>
     </div>

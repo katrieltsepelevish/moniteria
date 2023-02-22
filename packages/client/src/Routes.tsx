@@ -55,7 +55,8 @@ const Routes = () => {
         {setupCompleted && authorized && (
           <>
             <Route path="/" element={<Dashboard />} />
-            <Route path="*" element={<>Not Found</>} />
+            <Route path="*" element={<Navigate to="/" />} />
+            {/* <Route path="*" element={<>Not Found</>} /> */}
           </>
         )}
       </Switch>

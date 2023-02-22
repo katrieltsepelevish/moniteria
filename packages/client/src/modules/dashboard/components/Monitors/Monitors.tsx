@@ -9,16 +9,15 @@ import {
 } from '../../../../services/monitor/monitorApi';
 import { getSocket } from '../../../../lib/socket';
 import { HeartbeatState } from '../Heartbeat/Heartbeat';
-
-interface MonitorsProps {
-  toggleForm: () => void;
-}
+import { useFormSidebarContext } from '../../../../contexts/FormSidebarContext';
 
 const socket = getSocket();
 
 type HeartbeatsType = { [key: string]: HeartbeatState[] };
 
-const Monitors: React.FC<MonitorsProps> = ({ toggleForm }) => {
+const Monitors = () => {
+  const { setOpen, setEditMode } = useFormSidebarContext();
+
   const { data } = useGetAllMonitorsQuery(null);
 
   const monitors = React.useMemo(() => data?.monitors, [data]);
@@ -67,11 +66,21 @@ const Monitors: React.FC<MonitorsProps> = ({ toggleForm }) => {
             })}
           </>
         ) : (
-          <AddMonitorItem onClick={toggleForm} />
+          <AddMonitorItem
+            onClick={() => {
+              setEditMode(false);
+              setOpen(true);
+            }}
+          />
         )}
       </div>
 
-      <AddMonitorButton onClick={toggleForm} />
+      <AddMonitorButton
+        onClick={() => {
+          setEditMode(false);
+          setOpen(true);
+        }}
+      />
     </div>
   );
 };
