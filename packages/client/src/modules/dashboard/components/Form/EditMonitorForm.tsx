@@ -15,7 +15,7 @@ import {
 const initalFormValues: AddMonitorRequest = {
   name: '',
   uri: '',
-  type: 'https',
+  type: 'http',
   heartbeatInterval: 60,
   retries: 0,
 };
@@ -94,7 +94,7 @@ const EditMonitorForm = () => {
       />
       <SelectField
         label="Type"
-        options={[{ name: 'HTTPS', value: 'https' }]}
+        options={[{ name: 'HTTP(s)', value: 'http' }]}
         onChange={handleInputChange}
         value={formValues?.type}
       />

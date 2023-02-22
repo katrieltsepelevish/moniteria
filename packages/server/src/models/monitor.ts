@@ -1,7 +1,7 @@
 import Mongoose from 'mongoose';
 
 export enum MonitorTypes {
-  HTTPS = 'https',
+  HTTP = 'http',
 }
 
 const monitorSchema = new Mongoose.Schema(
@@ -16,7 +16,7 @@ const monitorSchema = new Mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ['https'],
+      enum: ['http'],
       required: true,
     },
     heartbeatInterval: {
@@ -39,7 +39,7 @@ const monitorSchema = new Mongoose.Schema(
 export interface MonitorDocument extends Mongoose.Document {
   name: String;
   uri: String;
-  type: MonitorTypes.HTTPS;
+  type: MonitorTypes.HTTP;
   heartbeatInterval: Number;
   retries: Number;
   active: Boolean;

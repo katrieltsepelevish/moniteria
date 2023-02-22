@@ -10,7 +10,7 @@ const schema = Joi.object({
   _id: Joi.string().required(),
   name: Joi.string(),
   uri: Joi.string().uri(),
-  type: Joi.string().valid('https'),
+  type: Joi.string().valid('http'),
   heartbeatInterval: Joi.number().min(30).max(120),
   retries: Joi.number().min(0).max(3),
   active: Joi.boolean(),

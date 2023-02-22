@@ -9,7 +9,7 @@ import { pingMonitorsManager } from '../../PingMonitorsManager';
 const schema = Joi.object({
   name: Joi.string().required(),
   uri: Joi.string().required().uri(),
-  type: Joi.string().required().valid('https'),
+  type: Joi.string().required().valid('http'),
   heartbeatInterval: Joi.number().min(30).max(120).required(),
   retries: Joi.number().min(0).max(3).required(),
 });
