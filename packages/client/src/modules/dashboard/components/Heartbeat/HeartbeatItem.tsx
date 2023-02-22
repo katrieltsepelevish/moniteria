@@ -1,12 +1,12 @@
 import React from 'react';
 import ClassNames from 'classnames';
 
-interface MonitorItemChartItemProps {
+interface HeartbeatItemProps {
   percentage: number;
   failed: boolean;
 }
 
-const MonitorItemChartPulse: React.FC<MonitorItemChartItemProps> = ({
+const HeartbeatItem: React.FC<HeartbeatItemProps> = ({
   percentage,
   failed,
 }) => {
@@ -27,4 +27,4 @@ const MonitorItemChartPulse: React.FC<MonitorItemChartItemProps> = ({
   return <div className={classes} style={{ height: `${height}px` }} />;
 };
 
-export default React.memo(MonitorItemChartPulse);
+export default React.memo(HeartbeatItem);

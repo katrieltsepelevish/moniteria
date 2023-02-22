@@ -4,6 +4,7 @@ import Joi from 'joi';
 import validator from '../../helpers/validator';
 import ValidationException from '../../exceptions/validation';
 import Monitor from '../../models/monitor';
+import { pingMonitorsManager } from '../../PingMonitorsManager';
 
 const schema = Joi.object({
   _id: Joi.string().required(),
@@ -31,9 +32,23 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       ]);
     }
 
-    const newMonitor = await Monitor.findByIdAndUpdate(req.body._id, {
-      ...req.body,
-    });
+    const newMonitor = await Monitor.findByIdAndUpdate(
+      req.body._id,
+      {
+        ...req.body,
+      },
+      { new: true }
+    );
+
+    // Went from active -> not active
+    if (monitor.active && !newMonitor?.active) {
+      pingMonitorsManager().stopById(newMonitor!._id);
+    }
+
+    // Went from not active -> active
+    if (!monitor.active && newMonitor?.active) {
+      pingMonitorsManager().startById(newMonitor!._id);
+    }
 
     return res.status(200).send({ monitor: newMonitor });
   } catch (err) {

@@ -60,6 +60,14 @@ export const monitorApi = createApi({
       }),
       providesTags: ['getAll'],
     }),
+    deleteMonitor: builder.mutation({
+      query: (id: string) => ({
+        url: 'monitor',
+        method: 'delete',
+        data: { _id: id },
+      }),
+      invalidatesTags: ['getAll'],
+    }),
   }),
 });
 
@@ -67,4 +75,5 @@ export const {
   useUpdateMonitorMutation,
   useAddMonitorMutation,
   useGetAllMonitorsQuery,
+  useDeleteMonitorMutation,
 } = monitorApi;

@@ -4,6 +4,7 @@ import Joi from 'joi';
 import validator from '../../helpers/validator';
 import ValidationException from '../../exceptions/validation';
 import Monitor from '../../models/monitor';
+import { pingMonitorsManager } from '../../PingMonitorsManager';
 
 const schema = Joi.object({
   name: Joi.string().required(),
@@ -32,6 +33,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const newMonitor = await Monitor.create({ ...req.body });
+
+    pingMonitorsManager().startById(newMonitor._id);
 
     return res.status(201).send({ monitor: newMonitor });
   } catch (err) {

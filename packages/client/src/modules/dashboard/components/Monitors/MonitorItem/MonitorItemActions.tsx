@@ -10,6 +10,7 @@ import {
 
 import {
   MonitorState,
+  useDeleteMonitorMutation,
   useUpdateMonitorMutation,
 } from '../../../../../services/monitor/monitorApi';
 
@@ -19,6 +20,7 @@ interface MonitorItemActionsProps {
 
 const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
   const [updateMonitor] = useUpdateMonitorMutation();
+  const [deleteMonitor] = useDeleteMonitorMutation();
 
   const handleMonitorActivation = async () => {
     await updateMonitor({
@@ -27,12 +29,19 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
     });
   };
 
+  const handleMonitorDelete = async (id: string) => {
+    await deleteMonitor(id);
+  };
+
   return (
     <div className="flex flex-row gap-0 bg-[white] rounded-[4px] items-center justify-between p-1">
       <a target="_blank" href={monitor?.uri} className="icon-btn">
         <RiLink className="text-[21px]" />
       </a>
-      <button className="icon-btn">
+      <button
+        className="icon-btn"
+        onClick={() => handleMonitorDelete(monitor._id)}
+      >
         <RiCloseLine className="text-[19px]" />
       </button>
       {monitor?.active ? (

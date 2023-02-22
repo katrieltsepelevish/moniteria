@@ -1,10 +1,10 @@
 import SuperTest, { Test } from 'supertest';
 
 import User from '../models/user';
-import server from '../server';
+import jestServer from '../jestServer';
 import { mongoClient } from '../setup/database';
 
-const setup = async () => SuperTest(await server());
+const setup = async () => SuperTest(await jestServer());
 
 let request: SuperTest.SuperTest<Test>;
 
