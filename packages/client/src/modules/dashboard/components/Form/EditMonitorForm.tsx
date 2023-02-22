@@ -119,10 +119,6 @@ const EditMonitorForm = () => {
           darkMode
           onClick={handleSubmit}
         />
-        <IconButton
-          label="Clear"
-          icon={<RiCloseLine className="text-[21px]" />}
-        />
       </div>
     </div>
   );

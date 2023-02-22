@@ -102,6 +102,7 @@ const AddMonitorForm = () => {
         <IconButton
           label="Clear"
           icon={<RiCloseLine className="text-[21px]" />}
+          onClick={() => setFormValues(initalFormValues)}
         />
       </div>
     </div>
