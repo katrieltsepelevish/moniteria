@@ -14,6 +14,7 @@ import {
   useDeleteMonitorMutation,
   useUpdateMonitorMutation,
 } from '../../../../../services/monitor/monitorApi';
+import DeleteMonitorModal from '../../Modal/DeleteMonitorModal';
 
 interface MonitorItemActionsProps {
   monitor: MonitorState;
@@ -25,6 +26,8 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
 
   const { selectedMonitor, setEditMode, setSelectedMonitor, setOpen } =
     useFormSidebarContext();
+
+  const [showDeleteModal, setShowDeleteModal] = React.useState<boolean>(false);
 
   const handleMonitorActivation = async () => {
     await updateMonitor({
@@ -50,15 +53,17 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
 
   return (
     <div className="flex flex-row gap-0 bg-[white] rounded-[4px] items-center justify-between p-1">
+      {/* Monitor link button */}
       <a target="_blank" href={monitor?.uri} className="icon-btn">
         <RiLink className="text-[21px]" />
       </a>
-      <button
-        className="icon-btn"
-        onClick={() => handleMonitorDelete(monitor._id)}
-      >
+
+      {/* Delete button */}
+      <button className="icon-btn" onClick={() => setShowDeleteModal(true)}>
         <RiCloseLine className="text-[19px]" />
       </button>
+
+      {/* Pause / Resume buttons  */}
       {monitor?.active ? (
         <button className="icon-btn" onClick={handleMonitorActivation}>
           <RiPauseLine className="text-[19px]" />
@@ -68,12 +73,21 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
           <RiPlayLine className="text-[19px]" />
         </button>
       )}
+
+      {/* Edit button  */}
       <button
         className="icon-btn"
         onClick={() => handleMonitorEdit(monitor._id)}
       >
         <RiSettings3Line className="text-[19px]" />
       </button>
+
+      {/* Delete Monitor Modal */}
+      <DeleteMonitorModal
+        open={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onSubmit={() => handleMonitorDelete(monitor._id)}
+      />
     </div>
   );
 };

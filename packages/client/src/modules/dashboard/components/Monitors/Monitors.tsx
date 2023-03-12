@@ -88,8 +88,6 @@ const Monitors = () => {
                     new Date(b.createdAt).getTime()
                 ) ?? [];
 
-              console.log({ heartbeat });
-
               return (
                 <MonitorItem
                   monitor={monitor}
