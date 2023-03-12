@@ -64,9 +64,9 @@ class PingMonitor {
       this.stop(true);
     }
 
-    this.io!.emit('heartbeat', heartbeat);
+    const createdHeartbeat = await Heartbeat.create({ ...heartbeat });
 
-    await Heartbeat.create({ ...heartbeat });
+    this.io!.emit('heartbeat', createdHeartbeat);
 
     const updatedMonitor = await Monitor.findByIdAndUpdate(
       this.monitor.id,
