@@ -8,13 +8,13 @@ import {
   RiLink,
 } from 'react-icons/ri';
 
-import { useFormSidebarContext } from '../../../../../contexts/FormSidebarContext';
 import {
   MonitorState,
   useDeleteMonitorMutation,
   useUpdateMonitorMutation,
 } from '../../../../../services/monitor/monitorApi';
 import DeleteMonitorModal from '../../Modal/DeleteMonitorModal';
+import EditMonitorModal from '../../Modal/EditMonitorModal';
 
 interface MonitorItemActionsProps {
   monitor: MonitorState;
@@ -24,9 +24,7 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
   const [updateMonitor] = useUpdateMonitorMutation();
   const [deleteMonitor] = useDeleteMonitorMutation();
 
-  const { selectedMonitor, setEditMode, setSelectedMonitor, setOpen } =
-    useFormSidebarContext();
-
+  const [shoeEditModal, setShowEditModal] = React.useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = React.useState<boolean>(false);
 
   const handleMonitorActivation = async () => {
@@ -36,19 +34,10 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
     });
   };
 
-  const handleMonitorEdit = (id: string) => {
-    setEditMode(true);
-    setSelectedMonitor(id);
-    setOpen(true);
-  };
-
   const handleMonitorDelete = async (id: string) => {
     await deleteMonitor(id);
 
-    if (selectedMonitor === id) {
-      setEditMode(false);
-      setSelectedMonitor('');
-    }
+    setShowDeleteModal(false);
   };
 
   return (
@@ -59,28 +48,43 @@ const MonitorItemActions: React.FC<MonitorItemActionsProps> = ({ monitor }) => {
       </a>
 
       {/* Delete button */}
-      <button className="icon-btn" onClick={() => setShowDeleteModal(true)}>
+      <button
+        className="icon-btn outline-none"
+        onClick={() => setShowDeleteModal(true)}
+      >
         <RiCloseLine className="text-[19px]" />
       </button>
 
       {/* Pause / Resume buttons  */}
       {monitor?.active ? (
-        <button className="icon-btn" onClick={handleMonitorActivation}>
+        <button
+          className="icon-btn outline-none"
+          onClick={handleMonitorActivation}
+        >
           <RiPauseLine className="text-[19px]" />
         </button>
       ) : (
-        <button className="icon-btn" onClick={handleMonitorActivation}>
+        <button
+          className="icon-btn outline-none"
+          onClick={handleMonitorActivation}
+        >
           <RiPlayLine className="text-[19px]" />
         </button>
       )}
 
       {/* Edit button  */}
       <button
-        className="icon-btn"
-        onClick={() => handleMonitorEdit(monitor._id)}
+        className="icon-btn outline-none"
+        onClick={() => setShowEditModal(true)}
       >
         <RiSettings3Line className="text-[19px]" />
       </button>
+
+      <EditMonitorModal
+        open={shoeEditModal}
+        onClose={() => setShowEditModal(false)}
+        selectedMonitor={monitor._id}
+      />
 
       {/* Delete Monitor Modal */}
       <DeleteMonitorModal

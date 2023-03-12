@@ -1,6 +1,5 @@
 import React from 'react';
 
-import AddMonitorItem from './AddMonitor/AddMonitorItem';
 import AddMonitorButton from './AddMonitor/AddMonitorButton';
 import MonitorItem from './MonitorItem/MonitorItem';
 import {
@@ -9,18 +8,18 @@ import {
 } from '../../../../services/monitor/monitorApi';
 import { getSocket } from '../../../../lib/socket';
 import { HeartbeatState } from '../Heartbeat/Heartbeat';
-import { useFormSidebarContext } from '../../../../contexts/FormSidebarContext';
+import AddMonitorModal from '../Modal/AddMonitorModal';
 
 const socket = getSocket();
 
 type HeartbeatsType = { [key: string]: HeartbeatState[] };
 
 const Monitors = () => {
-  const { setOpen, setEditMode } = useFormSidebarContext();
-
   const { data } = useGetAllMonitorsQuery(null);
 
   const [monitors, setMonitors] = React.useState<MonitorState[]>([]);
+
+  const [showAddModal, setShowAddModal] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (data?.monitors) {
@@ -76,7 +75,7 @@ const Monitors = () => {
     <div>
       {/* Monitors grid */}
       <div className="grid grid-cols-4">
-        {monitors && monitors.length > 0 ? (
+        {monitors && monitors.length > 0 && (
           <>
             {monitors.map((monitor: MonitorState) => {
               const monitorId = String(monitor!._id);
@@ -97,21 +96,14 @@ const Monitors = () => {
               );
             })}
           </>
-        ) : (
-          <AddMonitorItem
-            onClick={() => {
-              setEditMode(false);
-              setOpen(true);
-            }}
-          />
         )}
       </div>
 
-      <AddMonitorButton
-        onClick={() => {
-          setEditMode(false);
-          setOpen(true);
-        }}
+      <AddMonitorButton onClick={() => setShowAddModal(true)} />
+
+      <AddMonitorModal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
       />
     </div>
   );

@@ -38,7 +38,9 @@ const SelectField: React.FC<SelectFieldProps> = ({
       </label>
       <select className={classes} {...props}>
         {options.map((option) => (
-          <option value={option.value}>{option.name}</option>
+          <option key={option.value} value={option.value}>
+            {option.name}
+          </option>
         ))}
       </select>
     </div>
