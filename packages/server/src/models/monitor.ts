@@ -23,6 +23,21 @@ const monitorSchema = new Mongoose.Schema(
       type: Number,
       required: true,
     },
+    reachable: {
+      type: Boolean,
+      require: false,
+      default: true,
+    },
+    uptime: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    downtime: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
     retries: {
       type: Number,
       required: true,
@@ -41,6 +56,9 @@ export interface MonitorDocument extends Mongoose.Document {
   uri: String;
   type: MonitorTypes.HTTP;
   heartbeatInterval: Number;
+  reachable: Boolean;
+  uptime: Number;
+  downtime: Number;
   retries: Number;
   active: Boolean;
   createdAt: Date;

@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { Server as SocketServer } from 'socket.io';
 
-import { MonitorDocument } from './models/monitor';
+import Monitor, { MonitorDocument } from './models/monitor';
 import Heartbeat, { HeartbeatState } from './models/heartbeat';
 import logger from './logger';
 
@@ -68,6 +68,28 @@ class PingMonitor {
 
     await Heartbeat.create({ ...heartbeat });
 
+    const updatedMonitor = await Monitor.findByIdAndUpdate(
+      this.monitor.id,
+      {
+        reachable: !heartbeat.down,
+        uptime: !heartbeat.down
+          ? Number(this.monitor.uptime) +
+            Number(this.monitor.heartbeatInterval) +
+            heartbeat.duration
+          : 0,
+        downtime: heartbeat.down
+          ? Number(this.monitor.downtime) +
+            Number(this.monitor.heartbeatInterval) +
+            heartbeat.duration
+          : 0,
+      },
+      { new: true }
+    );
+
+    this.monitor = updatedMonitor!;
+
+    this.io!.emit('monitor', updatedMonitor);
+
     this.heartbeatInterval = setInterval(
       () => this.pinger(),
       Number(this.monitor.heartbeatInterval) * 1000
@@ -76,6 +98,10 @@ class PingMonitor {
 
   getId() {
     return this.monitor._id;
+  }
+
+  updateMonitor(monitor: MonitorDocument) {
+    this.monitor = monitor;
   }
 }
 

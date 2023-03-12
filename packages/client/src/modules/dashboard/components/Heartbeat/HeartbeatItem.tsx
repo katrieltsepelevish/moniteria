@@ -24,7 +24,7 @@ const HeartbeatItem: React.FC<HeartbeatItemProps> = ({
     [failed]
   );
 
-  return <div className={classes} style={{ height: `${height}px` }} />;
+  return <div className={classes} style={{ height: `${height || 1}px` }} />;
 };
 
 export default React.memo(HeartbeatItem);

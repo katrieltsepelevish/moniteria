@@ -20,7 +20,13 @@ const Monitors = () => {
 
   const { data } = useGetAllMonitorsQuery(null);
 
-  const monitors = React.useMemo(() => data?.monitors, [data]);
+  const [monitors, setMonitors] = React.useState<MonitorState[]>([]);
+
+  React.useEffect(() => {
+    if (data?.monitors) {
+      setMonitors(data?.monitors);
+    }
+  }, [data]);
 
   const [heartbeats, setHeartbeats] = React.useState<HeartbeatsType>({});
 
@@ -31,17 +37,38 @@ const Monitors = () => {
       setHeartbeats((prevHeartbeats: HeartbeatsType) => {
         const monitorId = String(beat!.monitorId);
 
-        const newHeartbeats = {
-          ...prevHeartbeats,
-          [monitorId]: [...(prevHeartbeats[monitorId] || []), beat],
-        };
+        const existingBeat = prevHeartbeats[monitorId]?.find(
+          (heartbeat: HeartbeatState) => heartbeat._id === beat._id
+        );
 
-        return newHeartbeats;
+        if (!existingBeat) {
+          const newHeartbeats = {
+            ...prevHeartbeats,
+            [monitorId]: [...(prevHeartbeats[monitorId] || []), beat],
+          };
+
+          return newHeartbeats;
+        }
+
+        return prevHeartbeats;
       });
+    });
+
+    socket.on('monitor', (monitor: MonitorState) => {
+      setMonitors((prevMonitors: MonitorState[]) =>
+        prevMonitors.find(
+          (prevMonitor: MonitorState) => prevMonitor._id === monitor._id
+        )
+          ? prevMonitors.map((prevMonitor: MonitorState) =>
+              prevMonitor._id === monitor._id ? monitor : prevMonitor
+            )
+          : [...prevMonitors, monitor]
+      );
     });
 
     return () => {
       socket.off('heartbeat');
+      socket.off('monitor');
     };
   }, []);
 
@@ -54,7 +81,14 @@ const Monitors = () => {
             {monitors.map((monitor: MonitorState) => {
               const monitorId = String(monitor!._id);
 
-              const heartbeat: HeartbeatState[] = heartbeats[monitorId] ?? [];
+              const heartbeat: HeartbeatState[] =
+                heartbeats[monitorId]?.sort(
+                  (a: HeartbeatState, b: HeartbeatState) =>
+                    new Date(a.createdAt).getTime() -
+                    new Date(b.createdAt).getTime()
+                ) ?? [];
+
+              console.log({ heartbeat });
 
               return (
                 <MonitorItem

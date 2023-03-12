@@ -16,13 +16,13 @@ export default async (io: SocketServer) => {
     socket.on('initialHeartbeats', async () => {
       try {
         const monitorsHeartbeats = await Heartbeat.aggregate([
-          { $sort: { _id: 1 } },
+          { $sort: { createdAt: -1 } },
           { $group: { _id: '$monitorId', results: { $push: '$$ROOT' } } },
           {
             $project: {
               _id: 0,
               monitorId: '$_id',
-              heartbeats: { $slice: ['$results', 10] },
+              heartbeats: { $slice: ['$results', 20] },
             },
           },
         ]);

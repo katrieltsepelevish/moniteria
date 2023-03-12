@@ -40,6 +40,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       { new: true }
     );
 
+    pingMonitorsManager().updateById(newMonitor!._id, newMonitor!);
+
     // Went from active -> not active
     if (monitor.active && !newMonitor?.active) {
       pingMonitorsManager().stopById(newMonitor!._id);

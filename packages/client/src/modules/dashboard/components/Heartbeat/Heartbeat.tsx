@@ -9,6 +9,8 @@ export interface HeartbeatState {
   statusText: string;
   duration: number;
   down: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface HeartbeatProps {
@@ -19,11 +21,11 @@ const AXIOS_TIMEOUT_INTERVAL = 5; //seconds
 
 const Heartbeat: React.FC<HeartbeatProps> = ({ heartbeat }) => {
   return (
-    <div className="mt-6 flex flex-row gap-[2px] h-[60px] items-end justify-end">
+    <div className="flex flex-row gap-[2px] h-[60px] items-end justify-end">
       {heartbeat.length > 0 &&
         heartbeat.map((beat: HeartbeatState, index) => {
           const percentage = Math.round(
-            100 - (beat.duration / AXIOS_TIMEOUT_INTERVAL) * 100
+            (beat.duration / AXIOS_TIMEOUT_INTERVAL) * 100
           );
 
           return (

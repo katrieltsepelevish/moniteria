@@ -26,6 +26,9 @@ export type MonitorState = {
   uri: string;
   type: string;
   heartbeatInterval: number;
+  reachable: boolean;
+  uptime: number;
+  downtime: number;
   retries: number;
   active: boolean;
   createdAt: Date;

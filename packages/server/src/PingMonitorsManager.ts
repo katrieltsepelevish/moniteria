@@ -1,6 +1,6 @@
 import { io } from './setup/socket';
 import PingMonitor from './PingMonitor';
-import Monitor from './models/monitor';
+import Monitor, { MonitorDocument } from './models/monitor';
 
 export default class PingMonitorsManager {
   public static _instance: PingMonitorsManager;
@@ -12,7 +12,23 @@ export default class PingMonitorsManager {
   }
 
   findById(id: string) {
-    return this.monitors.find((monitor) => monitor.getId() === id);
+    return this.monitors.find(
+      (monitor) => monitor.getId().toString() === id.toString()
+    );
+  }
+
+  updateById(id: string, monitor: MonitorDocument) {
+    const existingMonitor = this.findById(id);
+
+    if (!existingMonitor) {
+      return;
+    }
+
+    this.monitors.forEach((pingMonitor: PingMonitor) => {
+      if (pingMonitor.getId() === existingMonitor.getId()) {
+        pingMonitor.updateMonitor(monitor);
+      }
+    });
   }
 
   async startById(id: string) {
